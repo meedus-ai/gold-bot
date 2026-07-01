@@ -1,1 +1,1 @@
-worker: python gold_bot_final.py
+worker: python gold_bot_v4.py
