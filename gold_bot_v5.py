@@ -305,16 +305,20 @@ def analyze_scalping(df_m1, price, htf_bias):
     if buy_score >= 4 and buy_score > sell_score:
         signal = "BUY 🟢"
         entry  = round(price, 2)
-        sl     = round(entry - atr * 1.0, 2)
-        tp1    = round(entry + atr * 1.5, 2)
-        tp2    = round(entry + atr * 2.5, 2)
+        raw_sl = atr * 1.5
+        sl_dist = max(raw_sl, 3.0)  # حد أدنى 3$
+        sl     = round(entry - sl_dist, 2)
+        tp1    = round(entry + sl_dist * 2.0, 2)
+        tp2    = round(entry + sl_dist * 3.5, 2)
         rr     = f"1:{round(abs(tp2-entry)/abs(entry-sl), 1)}"
     elif sell_score >= 4 and sell_score > buy_score:
         signal = "SELL 🔴"
         entry  = round(price, 2)
-        sl     = round(entry + atr * 1.0, 2)
-        tp1    = round(entry - atr * 1.5, 2)
-        tp2    = round(entry - atr * 2.5, 2)
+        raw_sl = atr * 1.5
+        sl_dist = max(raw_sl, 3.0)  # حد أدنى 3$
+        sl     = round(entry + sl_dist, 2)
+        tp1    = round(entry - sl_dist * 2.0, 2)
+        tp2    = round(entry - sl_dist * 3.5, 2)
         rr     = f"1:{round(abs(tp2-entry)/abs(entry-sl), 1)}"
 
     return {"signal": signal, "entry": entry, "sl": sl, "tp1": tp1, "tp2": tp2,
